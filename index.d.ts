@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2026 The Stdlib Authors.
@@ -16,20 +16,11 @@
 * limitations under the License.
 */
 
-'use strict';
+// TypeScript Version: 4.1
 
-// MODULES //
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@esm/index.d.ts"/>
 
-var ndarraylike2scalar = require( '@stdlib/ndarray-base-ndarraylike2scalar' );
-var numelDimension = require( '@stdlib/ndarray-base-numel-dimension' );
-var clipIndex = require( '@stdlib/ndarray-base-clip-index' );
-var getStride = require( '@stdlib/ndarray-base-stride' );
-var getOffset = require( '@stdlib/ndarray-base-offset' );
-var getData = require( '@stdlib/ndarray-base-data-buffer' );
-var strided = require( '@stdlib/blas-ext-base-ccopy-within' ).ndarray;
-
-
-// MAIN //
+import { typedndarray, complex64ndarray } from '@stdlib/types/ndarray';
 
 /**
 * Performs an in-place copy of elements within a one-dimensional single-precision complex floating-point ndarray.
@@ -46,8 +37,8 @@ var strided = require( '@stdlib/blas-ext-base-ccopy-within' ).ndarray;
 *
 * -   If the `start` and `target` index ranges do not overlap, the `workspace` ndarray is unused and thus ignored.
 *
-* @param {ArrayLikeObject<Object>} arrays - array-like object containing ndarrays
-* @returns {ndarray} input ndarray
+* @param arrays - array-like object containing ndarrays
+* @returns input ndarray
 *
 * @example
 * var Complex64Vector = require( '@stdlib/ndarray-vector-complex64' );
@@ -72,37 +63,9 @@ var strided = require( '@stdlib/blas-ext-base-ccopy-within' ).ndarray;
 * var out = ccopyWithin( [ x, target, start, end, w ] );
 * // returns <ndarray>[ <Complex64>[ 1.0, 2.0 ], <Complex64>[ 1.0, 2.0 ], <Complex64>[ 3.0, 4.0 ] ]
 */
-function ccopyWithin( arrays ) {
-	var target;
-	var start;
-	var end;
-	var ws;
-	var wo;
-	var wd;
-	var xs;
-	var xo;
-	var xd;
-	var N;
-	var x;
-	var w;
-
-	x = arrays[ 0 ];
-	w = arrays[ 4 ];
-	N = numelDimension( x, 0 );
-	target = clipIndex( ndarraylike2scalar( arrays[ 1 ] ), N );
-	start = clipIndex( ndarraylike2scalar( arrays[ 2 ] ), N );
-	end = clipIndex( ndarraylike2scalar( arrays[ 3 ] ), N );
-	xd = getData( x );
-	xs = getStride( x, 0 );
-	xo = getOffset( x );
-	wd = getData( w );
-	ws = getStride( w, 0 );
-	wo = getOffset( w );
-	strided( N, target, start, end, xd, xs, xo, wd, ws, wo );
-	return x;
-}
+declare function ccopyWithin( arrays: [ complex64ndarray, typedndarray<number>, typedndarray<number>, typedndarray<number>, complex64ndarray ] ): complex64ndarray;
 
 
 // EXPORTS //
 
-module.exports = ccopyWithin;
+export = ccopyWithin;
