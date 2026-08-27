@@ -41,38 +41,32 @@ limitations under the License.
 
 <!-- /.intro -->
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/blas-ext-base-ndarray-ccopy-within
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
-To use in Observable,
-
 ```javascript
-ccopyWithin = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-ndarray-ccopy-within@umd/browser.js' )
-```
-
-To vendor stdlib functionality and avoid installing dependency trees for Node.js, you can use the UMD server build:
-
-```javascript
-var ccopyWithin = require( 'path/to/vendor/umd/blas-ext-base-ndarray-ccopy-within/index.js' )
-```
-
-To include the bundle in a webpage,
-
-```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-ndarray-ccopy-within@umd/browser.js"></script>
-```
-
-If no recognized module system is present, access bundle contents via the global scope:
-
-```html
-<script type="text/javascript">
-(function () {
-    window.ccopyWithin;
-})();
-</script>
+var ccopyWithin = require( '@stdlib/blas-ext-base-ndarray-ccopy-within' );
 ```
 
 #### ccopyWithin( arrays )
@@ -126,6 +120,7 @@ The function has the following parameters:
 ## Notes
 
 -   The input ndarray is copied **in-place** (i.e., the input ndarray is **mutated**).
+-   If a `target`, `start`, and/or `end` index is negative, the respective index is resolved by counting backward from the last element (where `-1` refers to the last element).
 -   If the `start` and `target` index ranges do not overlap, the `workspace` ndarray is unused and thus ignored.
 
 </section>
@@ -138,18 +133,13 @@ The function has the following parameters:
 
 <!-- eslint no-undef: "error" -->
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<body>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-vector-complex64@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-from-scalar@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-to-array@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-zeros@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-ndarray-ccopy-within@umd/browser.js"></script>
-<script type="text/javascript">
-(function () {
+```javascript
+var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
+var Complex64Vector = require( '@stdlib/ndarray-vector-complex64' );
+var scalar2ndarray = require( '@stdlib/ndarray-from-scalar' );
+var ndarray2array = require( '@stdlib/ndarray-to-array' );
+var zeros = require( '@stdlib/ndarray-zeros' );
+var ccopyWithin = require( '@stdlib/blas-ext-base-ndarray-ccopy-within' );
 
 var x = new Complex64Vector( discreteUniform( 20, -100, 100, {
     'dtype': 'float32'
@@ -172,11 +162,6 @@ var w = zeros( [ 10 ], {
 
 ccopyWithin( [ x, target, start, end, w ] );
 console.log( ndarray2array( x ) );
-
-})();
-</script>
-</body>
-</html>
 ```
 
 </section>
